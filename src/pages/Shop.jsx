@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 function Shop() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [quantities, setQuantities] = useState({});
+  const { cart, setCart } = useContext(CartContext);
 
   useEffect(() => {
     async function getItems() {
@@ -21,6 +24,10 @@ function Shop() {
         item.id === id ? { ...item, quantity: (item.quantity ?? 1) + 1 } : item
       )
     );
+    setQuantities((prev) => ({
+      ...prev,
+      [id]: (prev[id] || 1) + 1,
+    }));
   }
 
   function handleDecrease(id) {
@@ -31,17 +38,36 @@ function Shop() {
           : item
       )
     );
+    setQuantities((prev) => ({
+      ...prev,
+      [id]: Math.max((prev[id] || 1) - 1, 1),
+    }));
   }
+  function handleChange(id, value) {
+    const num = parseInt(value) || 1;
+    setQuantities((prev) => ({ ...prev, [id]: num }));
+  }
+  function handleAddToCart(item) {
+    const qty = quantities[item.id] || 1;
 
-  function handleInputChange(id, value) {
-    const num = Number(value);
-    if (num >= 1) {
-      setItems((prev) =>
-        prev.map((item) => (item.id === id ? { ...item, quantity: num } : item))
+    // Check if item already in cart
+    const exists = cart.find((p) => p.id === item.id);
+
+    if (exists) {
+      // Update quantity of existing item
+      setCart(
+        cart.map((p) =>
+          p.id === item.id ? { ...p, quantity: p.quantity + qty } : p
+        )
       );
+    } else {
+      // Add new item
+      setCart([...cart, { ...item, quantity: qty }]);
     }
-  }
 
+    // Optional: Alert user
+    alert(`Added ${qty} x ${item.title} to cart!`);
+  }
   return (
     <div>
       <h1>Shop</h1>
@@ -51,15 +77,20 @@ function Shop() {
             <img src={item.image} alt={item.title} />
             <p>{item.title}</p>
             <div className="quantity-controls">
-              <button onClick={() => handleDeacrease(item.id)}>-</button>
+              <button onClick={() => handleDecrease(item.id)}>-</button>
+
               <input
                 type="number"
-                value={item.quantity ?? 1}
-                onchange={(e) => handleInputChange(item.id, e.target.value)}
-              ></input>
+                value={quantities[item.id] || 1}
+                onChange={(e) => handleChange(item.id, e.target.value)}
+              />
+
               <button onClick={() => handleIncrease(item.id)}>+</button>
             </div>
-            <button className="add-btn">Add To Cart</button>
+
+            <button className="add-btn" onClick={() => handleAddToCart(item)}>
+              Add To Cart
+            </button>
           </div>
         ))}
       </div>
