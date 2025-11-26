@@ -17,13 +17,23 @@ function Shop() {
     getItems();
   }, []);
 
-  if (loading) return <p>Loading Products...</p>;
-  function handleIncrease(id) {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: (item.quantity ?? 1) + 1 } : item
-      )
+  // -------------- SKELETON LOADER -----------------
+  if (loading)
+    return (
+      <div className="shop-grid">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <div key={index} className="skeleton-card">
+            <div className="skeleton-img"></div>
+            <div className="skeleton-line short"></div>
+            <div className="skeleton-line"></div>
+            <div className="skeleton-line"></div>
+          </div>
+        ))}
+      </div>
     );
+  // -------------------------------------------------
+
+  function handleIncrease(id) {
     setQuantities((prev) => ({
       ...prev,
       [id]: (prev[id] || 1) + 1,
@@ -31,51 +41,45 @@ function Shop() {
   }
 
   function handleDecrease(id) {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id && (item.quantity ?? 1) > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
     setQuantities((prev) => ({
       ...prev,
       [id]: Math.max((prev[id] || 1) - 1, 1),
     }));
   }
+
   function handleChange(id, value) {
     const num = parseInt(value) || 1;
     setQuantities((prev) => ({ ...prev, [id]: num }));
   }
+
   function handleAddToCart(item) {
     const qty = quantities[item.id] || 1;
 
-    // Check if item already in cart
     const exists = cart.find((p) => p.id === item.id);
 
     if (exists) {
-      // Update quantity of existing item
       setCart(
         cart.map((p) =>
           p.id === item.id ? { ...p, quantity: p.quantity + qty } : p
         )
       );
     } else {
-      // Add new item
       setCart([...cart, { ...item, quantity: qty }]);
     }
-
-    // Optional: Alert user
-    alert(`Added ${qty} x ${item.title} to cart!`);
   }
+
   return (
-    <div>
-      <h1>Shop</h1>
+    <div className="shop-container">
+      <h1 className="shop-title">Shop Products</h1>
+
       <div className="shop-grid">
         {items.map((item) => (
           <div key={item.id} className="product-card">
             <img src={item.image} alt={item.title} />
-            <p>{item.title}</p>
+
+            <h3 className="product-title">{item.title}</h3>
+            <p className="price">${item.price}</p>
+
             <div className="quantity-controls">
               <button onClick={() => handleDecrease(item.id)}>-</button>
 

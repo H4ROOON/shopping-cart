@@ -6,8 +6,6 @@ import Cart from "./pages/Cart";
 
 function App() {
   return (
-    const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
     <Router>
       <Navbar />
 
