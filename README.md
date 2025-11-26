@@ -1,16 +1,82 @@
-# React + Vite
+-- 🛍️ Modern React Shopping Cart --
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A premium, fully responsive e-commerce application built with React, Vite, and Context API. This project demonstrates a modern shopping experience featuring real-time state management, API integration, and a high-end "Glassmorphism" UI design.
 
-Currently, two official plugins are available:
+-- 🚀 Live Demo --
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+👉 [View Live Preview](https://shopping-cart-haroon.netlify.app/)
 
-## React Compiler
+-- ✨ Features --
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Dynamic Product Feed:** Fetches real product data from FakeStoreAPI.
 
-## Expanding the ESLint configuration
+**Global State Management:** Utilizes React Context API for seamless cart data sharing across components.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Smart Cart Logic:**
+- Add items with custom quantities.
+- Real-time total price calculation.
+- Increase/Decrease/Remove functionality.
+- Prevents duplicate entries by updating quantities intelligently.
+
+**Premium UI/UX:**
+- Glassmorphism: Frosted glass effects on cards and navbar.
+- Neumorphism: Soft, tactile feel on buttons and controls.
+- Animations: Smooth hover effects and animated gradient backgrounds.
+- Responsive: Fully optimized for mobile, tablet, and desktop.
+
+-- 🛠️ Tech Stack --
+
+**Frontend:** React.js (Vite)  
+**Routing:** React Router DOM v6  
+**State:** React Context API & Hooks (useState, useEffect, useContext)  
+**Styling:** Pure CSS3 (CSS Variables, Flexbox, Grid, Animations)  
+
+-- 🚀 Getting Started --
+
+Follow these steps to run the project locally.
+
+**Prerequisites:**  
+Node.js (v14 or higher)  
+npm or yarn  
+
+**Installation:**  
+
+Clone the repository:
+
+```bash
+git clone https://github.com/H4ROOON/shopping-cart.git
+cd shopping-cart
+Install dependencies:
+
+
+npm install
+Run the development server:
+
+npm run dev
+
+
+-- 📂 Project Structure --
+
+
+├── components/
+│   └── Navbar.jsx       
+├── context/
+│   └── CartContext.jsx  
+├── pages/
+│   ├── Home.jsx        │   ├── Shop.jsx        │   └── Cart.jsx        
+├── styles/
+│   └── main.css         
+├── App.jsx              
+└── main.jsx
+            
+-- 🎨 Design Highlights --
+
+The application uses a distinctive Dark/Vibrant aesthetic:
+
+Background: A slow-moving, 4-color gradient animation.
+
+Cards: Semi-transparent white layers with backdrop blur (backdrop-filter: blur(12px)).
+
+Interactions: Buttons glow and scale slightly upon interaction to provide feedback.
+
+---
